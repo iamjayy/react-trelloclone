@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import TrelloList from "../src/components/trelloList/TrelloList";
 import { connect } from "react-redux";
-import { StylesContext } from "@material-ui/styles";
+// import { StylesContext } from "@material-ui/styles";
 
 class App extends Component {
   render() {
