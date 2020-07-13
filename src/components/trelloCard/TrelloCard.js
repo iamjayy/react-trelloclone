@@ -1,15 +1,21 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
 
-const TrelloCard = () => {
+const TrelloCard = ({ text }) => {
   return (
-    <Card>
-      <Typography color="textSecondary" gutterBottom>
-        Word of the Day
-      </Typography>
+    <Card style={styles.cardContainer}>
+      <Typography>{text}</Typography>
+      <CardContent />
     </Card>
   );
+};
+
+const styles = {
+  cardContainer: {
+    marginBottom: 8
+  }
 };
 
 export default TrelloCard;
