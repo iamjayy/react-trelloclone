@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import TrelloList from "../src/components/trelloList/TrelloList";
 import { connect } from "react-redux";
 // import { StylesContext } from "@material-ui/styles";
+import TrelloActionButton from "../src/components/trelloActionButton/TrelloActionButton";
 
 class App extends Component {
   render() {
@@ -13,6 +14,7 @@ class App extends Component {
           {lists.map(list => (
             <TrelloList key={list.id} title={list.title} cards={list.cards} />
           ))}
+          <TrelloActionButton list />
         </div>
       </div>
     );

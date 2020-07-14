@@ -10,6 +10,7 @@ const TrelloList = ({ title, cards }) => {
       borderRadius: 3,
       width: 300,
       padding: 8,
+      height: "100%",
       marginRight: 8
     }
   };
