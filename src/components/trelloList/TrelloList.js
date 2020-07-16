@@ -3,7 +3,7 @@ import TrelloCard from "../trelloCard/TrelloCard";
 // import { CardActions, Card } from "@material-ui/core";
 import TrelloActionButton from "../trelloActionButton/TrelloActionButton";
 
-const TrelloList = ({ title, cards }) => {
+const TrelloList = ({ title, cards, listID }) => {
   const styles = {
     container: {
       backgroundColor: "#dfe3e6",
@@ -21,7 +21,7 @@ const TrelloList = ({ title, cards }) => {
       {cards.map(card => (
         <TrelloCard key={card.id} text={card.text} />
       ))}
-      <TrelloActionButton />
+      <TrelloActionButton listID={listID} />
     </div>
   );
 };
