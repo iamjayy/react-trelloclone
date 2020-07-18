@@ -1,78 +1,33 @@
-import React from "react";
+import React, { Component } from "react";
 import Icon from "@material-ui/core/Icon";
-import TextArea from "react-textarea-autosize";
-import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
+import Card from "@material-ui/core/Card";
+import TextareaAutosize from "react-textarea-autosize";
 import { connect } from "react-redux";
-import { addList, addCard } from "../../actions/index";
-
-class TrelloActionButton extends React.Component {
+import { addList, addCard } from "../actions";
+class TrelloActionButton extends Component {
   state = {
-    formOpen: false
-  };
-
-  openForm = () => {
-    this.setState({
-      formOpen: true
-    });
-  };
-
-  closeForm = e => {
-    this.setState({
-      formOpen: false
-    });
-  };
-
-  handleInputChange = e => {
-    this.setState({
-      text: e.target.value
-    });
-  };
-
-  handleAddList = () => {
-    const { dispatch } = this.props;
-    const { text } = this.state;
-
-    if (text) {
-      this.setState({
-        text: ""
-      });
-      dispatch(addList(text));
-    }
-
-    return;
-  };
-
-  handleAddCard = () => {
-    const { dispatch, listID } = this.props;
-    const { text } = this.state;
-
-    if (text) {
-      this.setState({
-        text: ""
-      });
-      dispatch(addCard(listID, text));
-    }
+    formOpen: false,
+    text: ""
   };
 
   renderAddButton = () => {
     const { list } = this.props;
-
-    const buttonText = list ? "Add another card" : "Add another list";
+    const buttonText = list ? "Add another list" : "Add another card";
 
     const buttonTextOpacity = list ? 1 : 0.5;
-    const ButtonTextColor = list ? "white" : "inherit";
-    const buttonTextBackground = list ? "rgba(0,0,0,.15)" : "inherit";
+    const buttonTextColor = list ? "#fff" : "inheirit";
+    const buttonTextBackground = list ? "rgba(0, 0, 0, .15)" : "inheirit";
 
     return (
       <div
-        onClick={this.openForm}
         style={{
-          ...styles.openForButtonGroup,
+          ...styles.openFormButtonGroup,
           opacity: buttonTextOpacity,
-          color: ButtonTextColor,
-          backgroundColor: buttonTextBackground
+          color: buttonTextColor,
+          background: buttonTextBackground
         }}
+        onClick={this.openForm}
       >
         <Icon>add</Icon>
         <p>{buttonText}</p>
@@ -82,10 +37,9 @@ class TrelloActionButton extends React.Component {
 
   renderForm = () => {
     const { list } = this.props;
-
     const placeholder = list
-      ? "Enter list title..."
-      : "Enter a title for this card...";
+      ? "Enter a list title"
+      : "Enter a title for this card";
 
     const buttonTitle = list ? "Add List" : "Add Card";
 
@@ -98,34 +52,76 @@ class TrelloActionButton extends React.Component {
             padding: "6px 8px 2px"
           }}
         >
-          <TextArea
+          <TextareaAutosize
             placeholder={placeholder}
-            autoFocus
             onBlur={this.closeForm}
             value={this.state.text}
             onChange={this.handleInputChange}
+            autoFocus
             style={{
               resize: "none",
               width: "100%",
-              overflow: "hidden",
               outline: "none",
-              border: "none"
+              border: "none",
+              overflow: "hidden"
             }}
           />
         </Card>
-
         <div style={styles.formButtonGroup}>
           <Button
             onMouseDown={list ? this.handleAddList : this.handleAddCard}
             variant="contained"
-            style={{ color: "white", backgroundColor: "#5aac44" }}
+            style={{
+              color: "#fff",
+              backgroundColor: "#5aac44"
+            }}
           >
-            {buttonTitle}
+            {buttonTitle}{" "}
           </Button>
           <Icon style={{ marginLeft: 8, cursor: "pointer" }}>close</Icon>
         </div>
       </div>
     );
+  };
+
+  openForm = () => {
+    this.setState({
+      formOpen: true
+    });
+  };
+
+  closeForm = () => {
+    this.setState({
+      formOpen: false
+    });
+  };
+
+  handleInputChange = e => this.setState({ text: e.target.value });
+
+  handleAddList = e => {
+    const { dispatch } = this.props;
+    const { text } = this.state;
+
+    if (text) {
+      dispatch(addList(text));
+
+      this.setState({ text: "" });
+    }
+
+    return;
+  };
+
+  handleAddCard = e => {
+    const { listId, dispatch } = this.props;
+    const { text } = this.state;
+
+    if (text) {
+      dispatch(addCard(listId, text));
+
+      this.setState({ text: "" });
+    }
+
+    return;
   };
 
   render() {
@@ -134,7 +130,7 @@ class TrelloActionButton extends React.Component {
 }
 
 const styles = {
-  openForButtonGroup: {
+  openFormButtonGroup: {
     display: "flex",
     alignItems: "center",
     cursor: "pointer",
