@@ -1,41 +1,41 @@
 import { CONSTANTS } from "../../actions/index";
 
 let listID = 2;
-let cardID = 4;
+let cardID = 6;
 
 const initialState = [
   {
     title: "Last Episode",
-    id: 0,
+    id: `list-${0}`,
     cards: [
       {
-        id: 0,
+        id: `card-${0}`,
         text: "lorum ipsom lorum ipsom lorum ipsom"
       },
       {
-        id: 1,
+        id: `card-${1}`,
         text: "lorum ipsom lorum ipsom lorum ipsom"
       }
     ]
   },
   {
     title: "This Episode",
-    id: 1,
+    id: `list-${1}`,
     cards: [
       {
-        id: 0,
+        id: `card-${2}`,
         text: "lorum ipsom lorum ipsom lorum ipsom"
       },
       {
-        id: 1,
+        id: `card-${3}`,
         text: "lorum ipsom lorum ipsom lorum ipsom"
       },
       {
-        id: 2,
+        id: `card-${4}`,
         text: "lorum ipsom lorum ipsom lorum ipsom"
       },
       {
-        id: 3,
+        id: `card-${5}`,
         text: "lorum ipsom lorum ipsom lorum ipsom"
       }
     ]
@@ -48,7 +48,7 @@ const ListReducer = (state = initialState, action) => {
       const newList = {
         title: action.payload,
         cards: [],
-        id: listID
+        id: `list-${listID}`
       };
       listID += 1;
       return [...state, newList];
@@ -56,9 +56,11 @@ const ListReducer = (state = initialState, action) => {
     case CONSTANTS.ADD_CARD:
       const newCard = {
         text: action.payload.text,
-        id: cardID
+        id: `list-${cardID}`
       };
       cardID += 1;
+
+      console.log("action received", action);
 
       const newState = state.map(list => {
         if (list.id === action.payload.listID) {
